@@ -1,0 +1,51 @@
+[settings]
+# algorithm: choose the generator
+#   - "ipog" : IPOG-like incremental construction
+#   - "greedy": Greedy randomized candidate sampling
+#   - "hybrid": IPOG-like then greedy + local search repair
+algorithm = "hybrid"
+# t (int): t-way coverage level (2 = pairwise). Be cautious with t >=3; combinatorial explosion.
+t = 2
+# out: destination CSV path for the generated DOE
+out = "Pairwise_DOE_from_config.csv"
+# prune: when true, the generated design will be post-processed to remove redundant rows
+prune = true
+# prune_infeasible: pre-eliminate infeasible t-tuples using default-fill checking
+prune_infeasible = true
+# seed: RNG seed for reproducible runs
+seed = 42
+# seed_rows: optional inline seed rows. Each row must match the factor order defined in [factors].
+seed_rows = [
+	[32000, 0, 3, 1, 115, 64],
+	[40000, 22, 4, 2, 125, 70],
+]
+# plots: when true, generate images (coverage progression and pair frequency hist) and summary
+plots = true
+# statistics: when true, generate textual statistics summary only (if plots is false then only summary will be generated)
+statistics = true
+# Limit how many per-pair heatmaps to render (top missing pairs)
+max_pair_heatmaps = 216
+# report: when true, generate a markdown report `coverage_report.md` in the outdir with stats, tables and images
+report = false
+
+[factors]
+"Input Rate" = [32000, 34000, 36000, 38000, 40000]
+# "Gas Valve Location" = [2, 3, 4, 5, 6]
+# "Gas Valve Differential" = [5, 8, 11, 14, 16]
+"Dip Tube Length" = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
+# "Tank Volume" = [36, 38, 40, 42]
+"Flue Tube" = [3, 4]
+# "Tank Diameter" = [16, 18]
+"Jacket Thickness" = [1, 1.5, 2]
+# "Damper" = [1, 0]
+"Water Outlet" = [115, 117.5, 120, 122.5, 125]
+"Water Inlet" = [64, 65, 66, 67, 68, 69, 70]
+# "Foam R-Value" = ["nominal - 20%","nominal - 15%","nominal - 10%","nominal - 5%","nominal","nominal + 5%","nominal + 10%","nominal + 15%","nominal + 20%"]
+
+# [[constraints]]
+# if = { "Jacket Thickness" = 2, "Water Outlet" = 125 }
+# then_not = { "Damper" = ["Top"] }
+
+# [[constraints]]
+# if = { "Tank Volume" = "36g" }
+# then_not = { "Water Outlet" = 125 }
