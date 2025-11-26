@@ -45,18 +45,18 @@ def main(argv=None):
 
     is_valid = None
     if constraints_path and isinstance(constraints_path, str) and Path(constraints_path).exists():
-        from generate_pairwise_doe_ext import load_constraints
+        from doe_helpers import load_constraints
         is_valid = load_constraints(Path(constraints_path))
     else:
         cfg_constraints = cfg.get('constraints')
         if cfg_constraints:
-            from generate_pairwise_doe_ext import compile_constraints_from_config
+            from doe_helpers import compile_constraints_from_config
             names = list(factors.keys())
             is_valid = compile_constraints_from_config(cfg_constraints, names)
 
     seed_rows = None
     if seed_rows_path:
-        from generate_pairwise_doe_ext import load_seed_rows
+        from doe_helpers import load_seed_rows
         if isinstance(seed_rows_path, str) and Path(seed_rows_path).exists():
             seed_rows = load_seed_rows(Path(seed_rows_path))
         elif isinstance(seed_rows_path, list):

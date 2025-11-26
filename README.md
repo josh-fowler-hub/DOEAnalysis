@@ -157,11 +157,13 @@ constraints = "constraints.py"
 ### Option 2: Inline TOML Constraints
 
 ```toml
-[constraints]
-rules = [
-    "Fan Speed != 'High' or Input Rate != '32k'",
-    "Temperature <= 140 or Gas Valve Location >= 4"
-]
+[[constraints]]
+if = { "Jacket Thickness" = 2, "Water Outlet" = 125 }
+then_not = { "Damper" = ["Top"] }
+
+[[constraints]]
+if = { "Tank Volume" = "36g" }
+then_not = { "Water Outlet" = 125 }
 ```
 
 ---
@@ -251,6 +253,7 @@ python validate_pairwise_doe.py Pairwise_DOE.csv --config doe_config.toml --t 2
 DOEAnalysis/
 ├── generate_doe.py           # Main entry point
 ├── pairwise_improvements.py  # Core algorithms (IPOG, greedy, hybrid, pruning)
+├── doe_helpers.py            # Constraints, Seed Rows, Read/Write
 ├── plot_coverage.py          # Coverage analysis and visualization
 ├── config_loader.py          # TOML configuration loader
 ├── requirements.txt          # Python dependencies
