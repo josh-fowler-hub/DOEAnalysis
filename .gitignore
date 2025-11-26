@@ -26,3 +26,7 @@ Thumbs.db
 .venv
 env/
 venv/
+
+# Old Docs
+docs/*.old
+deprecated/
