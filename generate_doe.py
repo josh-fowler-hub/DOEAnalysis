@@ -12,6 +12,7 @@ The TOML should include:
 - out = "Pairwise_DOE.csv"
 - prune = true/false
 - prune_infeasible = true/false
+- transpose_csv = true/false (for GT-Suite DOE Setup copy/paste)
 - constraints = "constraints.py"
 - seed_rows = "seed_rows.json"
 - seed = 42
@@ -40,6 +41,7 @@ def main(argv=None):
     prune = bool(settings.get('prune', cfg.get('prune', True)))
     prune_infeasible = bool(settings.get('prune_infeasible', cfg.get('prune_infeasible', True)))
     seed_val = int(settings.get('seed', cfg.get('seed', 42)))
+    transpose_csv = bool(settings.get('transpose_csv', cfg.get('transpose_csv', False)))
     constraints_path: Optional[Path] = settings.get('constraints', cfg.get('constraints'))
     seed_rows_path = settings.get('seed_rows', cfg.get('seed_rows'))
 
@@ -86,8 +88,16 @@ def main(argv=None):
     names, _levels = indices_from_factors(factors)
     df = rows_to_dataframe(design, names)
     if df is not None:
-        df.to_csv(out, index=False)
-        print(f"Wrote {len(design)} rows to {out}")
+        if transpose_csv:
+            # Transpose: factors become rows, runs become columns (for GT-Suite DOE Setup)
+            df_out = df.T
+            df_out.columns = [f"Run_{i+1}" for i in range(len(df_out.columns))]
+            df_out.index.name = "Factor"
+            df_out.to_csv(out, index=True)
+            print(f"Wrote {len(design)} runs (transposed) to {out}")
+        else:
+            df.to_csv(out, index=False)
+            print(f"Wrote {len(design)} rows to {out}")
         # optionally plot
         try:
             from plot_coverage import main as plot_main

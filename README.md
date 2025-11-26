@@ -120,6 +120,7 @@ Define your factors and their levels:
 | `prune` | bool | `true` | Remove redundant rows after generation |
 | `prune_infeasible` | bool | `true` | Skip infeasible t-tuples during generation |
 | `seed` | int | `42` | Random seed for reproducibility |
+| `transpose_csv` | bool | `false` | Transpose output (factors as rows) for GT-Suite DOE Setup |
 | `plots` | bool | `false` | Generate coverage plots |
 | `statistics` | bool | `false` | Generate statistics only (no plots) |
 | `report` | bool | `false` | Generate Markdown coverage report |

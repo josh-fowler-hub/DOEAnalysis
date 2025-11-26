@@ -27,6 +27,8 @@ statistics = true
 max_pair_heatmaps = 216
 # report: when true, generate a markdown report `coverage_report.md` in the outdir with stats, tables and images
 report = false
+# transpose_csv: when true, output CSV with factors as rows and runs as columns (for GT-Suite DOE Setup copy/paste)
+transpose_csv = true
 
 [factors]
 "Input Rate" = [32000, 34000, 36000, 38000, 40000]

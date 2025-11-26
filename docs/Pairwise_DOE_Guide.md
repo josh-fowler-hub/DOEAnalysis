@@ -74,7 +74,7 @@ $$\sum_{i<j} L_i \cdot L_j$$
 
 The **theoretical lower bound** for the number of rows is:
 
-$$N_{\min} = \left\lceil \frac{\sum_{i<j} L_i \cdot L_j}{C(k,2)} \right\rceil$$
+$$ N_{ \min } = \left\lceil \frac{\sum_{i<j} L_i \cdot L_j}{C(k,2)} \right\rceil $$
 
 In practice, algorithms produce designs larger than this bound due to overlap constraints and the greedy nature of construction.
 
